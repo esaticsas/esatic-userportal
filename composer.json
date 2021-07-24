@@ -1,0 +1,27 @@
+{
+    "name": "esatic/user-portal",
+    "description": "Register a user activated from the CRM in the database and send a confirmation email",
+    "authors": [
+        {
+            "name": "Jonathan Casas",
+            "email": "jonathan.casas@esatic.com"
+        }
+    ],
+    "version": "1.0.0",
+    "require": {
+        "php": "^7.4",
+        "laravel/framework": "^7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Esatic\\ActiveUser\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Esatic\\ActiveUser\\ActiveUserServiceProvider"
+            ]
+        }
+    }
+}
