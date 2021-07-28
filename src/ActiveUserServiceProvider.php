@@ -3,6 +3,7 @@
 namespace Esatic\ActiveUser;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Config;
 
 class ActiveUserServiceProvider extends ServiceProvider
 {
@@ -13,12 +14,11 @@ class ActiveUserServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // register our controller
         $this->loadRoutesFrom(__DIR__ . '/routes.php');
         $this->loadMigrationsFrom(__DIR__ . '/migrations/');
-        $this->loadViewsFrom([__DIR__ . '/views/'], 'Esatic');
         $this->publishes([__DIR__ . '/config/esatic.php' => config_path('esatic.php')], 'Esatic');
         $this->mergeConfigFrom(__DIR__ . '/config/esatic.php', 'Esatic');
+        $this->registerViews();
     }
 
     /**
@@ -29,5 +29,29 @@ class ActiveUserServiceProvider extends ServiceProvider
     public function boot()
     {
 
+    }
+
+    /**
+     * Register views.
+     *
+     * @return void
+     */
+    public function registerViews()
+    {
+        $viewPath = resource_path('views/users/');
+        $sourcePath = __DIR__ . '/views/';
+        $this->publishes([$sourcePath => $viewPath], ['views', 'Esatic']);
+        $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), 'Esatic');
+    }
+
+    private function getPublishableViewPaths(): array
+    {
+        $paths = [];
+        foreach (Config::get('view.paths') as $path) {
+            if (is_dir($path . '/users')) {
+                $paths[] = $path . '/users';
+            }
+        }
+        return $paths;
     }
 }
