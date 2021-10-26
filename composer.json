@@ -21,7 +21,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Esatic\\ActiveUser\\ActiveUserServiceProvider"
+                "Esatic\\ActiveUser\\Providers\\ActiveUserServiceProvider"
             ]
         }
     },
