@@ -7,7 +7,7 @@
             "email": "jonathan.casas@esatic.com"
         }
     ],
-    "version": "1.0.2",
+    "version": "1.0.5",
     "license": "MIT",
     "require": {
         "php": "^7.4",
