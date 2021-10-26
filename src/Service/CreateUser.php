@@ -47,15 +47,15 @@ class CreateUser
         );
     }
 
-     public function notify(User $user, string $password)
-     {
-         Log::info('Sending email');
-         try {
-             Mail::to($user)->send(new NotifyNewAccount($user->email, $password));
-         } catch (\Exception $ex) {
-             Log::info('Error: ' . $ex->getMessage());
-         }
-         Log::info('Email sended');
-     }
+    public function notify(User $user, string $password)
+    {
+        Log::info('Sending email');
+        try {
+            Mail::to($user)->send(new NotifyNewAccount($user->email, $password));
+            Log::info('Email sended');
+        } catch (\Exception $ex) {
+            Log::info('Error sending mail: ' . $ex->getMessage());
+        }
+    }
 
 }

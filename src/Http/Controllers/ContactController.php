@@ -1,6 +1,6 @@
 <?php
 
-namespace Esatic\ActiveUser\Controllers;
+namespace Esatic\ActiveUser\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Esatic\ActiveUser\Models\User;
@@ -33,8 +33,6 @@ class ContactController extends Controller
      */
     public function save(Request $request): JsonResponse
     {
-        //var_dump($request->input('last_name'));
-        //die;
         /** @var User $user */
         $user = User::query()->where('id_crm', '=', $request->input('id_crm'))->first();
         $result = array();
@@ -45,7 +43,7 @@ class ContactController extends Controller
         return response()->json($result);
     }
 
-    public function disable(Request $request)
+    public function disable(Request $request): JsonResponse
     {
         /** @var User $user */
         $user = User::query()->where('id_crm', '=', $request->input('id_crm'))->first();

@@ -1,7 +1,10 @@
 <?php
 
-namespace Esatic\ActiveUser;
+namespace Esatic\ActiveUser\Providers;
 
+use Esatic\ActiveUser\Http\Middleware\UserCrmMiddleware;
+use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Config;
 
@@ -14,11 +17,12 @@ class ActiveUserServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->loadRoutesFrom(__DIR__ . '/routes.php');
-        $this->loadMigrationsFrom(__DIR__ . '/migrations/');
-        $this->publishes([__DIR__ . '/config/esatic.php' => config_path('esatic.php')], 'Esatic');
-        $this->mergeConfigFrom(__DIR__ . '/config/esatic.php', 'Esatic');
+        $this->addRoutes();
+        $this->loadMigrationsFrom(__DIR__ . '/../migrations/');
+        $this->publishes([__DIR__ . '/../config/esatic.php' => config_path('esatic.php')], 'Esatic');
+        $this->mergeConfigFrom(__DIR__ . '/../config/esatic.php', 'Esatic');
         $this->registerViews();
+
     }
 
     /**
@@ -28,7 +32,9 @@ class ActiveUserServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        /** @var Router $router */
+        $router = $this->app['router'];
+        $router->pushMiddlewareToGroup('user-crm', UserCrmMiddleware::class);
     }
 
     /**
@@ -39,7 +45,7 @@ class ActiveUserServiceProvider extends ServiceProvider
     public function registerViews()
     {
         $viewPath = resource_path('views/users/');
-        $sourcePath = __DIR__ . '/views/';
+        $sourcePath = __DIR__ . '/../views/';
         $this->publishes([$sourcePath => $viewPath], ['views', 'Esatic']);
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), 'Esatic');
     }
@@ -53,5 +59,12 @@ class ActiveUserServiceProvider extends ServiceProvider
             }
         }
         return $paths;
+    }
+
+    protected function addRoutes()
+    {
+        Route::middleware(['api', 'user-crm'])
+            ->prefix('api')
+            ->group(__DIR__ . '/../routes/routes.php');
     }
 }

@@ -23,6 +23,8 @@ class User extends \App\Models\User
         'type_user',
         'email',
         'password',
-        'active'
+        'active',
+        'principal_module',
+        'principal_module_id'
     ];
 }

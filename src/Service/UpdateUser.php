@@ -32,7 +32,7 @@ class UpdateUser
      */
     public function execute(User $user): array
     {
-        $user->fill($this->request->all());
+        $user->fill($this->request->except(['password']));
         $user->save();
         return array(
             'contact' => $user,
