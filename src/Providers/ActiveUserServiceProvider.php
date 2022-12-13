@@ -19,8 +19,9 @@ class ActiveUserServiceProvider extends ServiceProvider
     {
         $this->addRoutes();
         $this->loadMigrationsFrom(__DIR__ . '/../migrations/');
-        $this->publishes([__DIR__ . '/../config/esatic.php' => config_path('esatic.php')], 'Esatic');
-        $this->mergeConfigFrom(__DIR__ . '/../config/esatic.php', 'Esatic');
+        $this->publishes([__DIR__ . '/../migrations/' => database_path('migrations')], 'user-crm');
+        $this->publishes([__DIR__ . '/../config/user-crm.php' => config_path('user-crm.php')], 'user-crm');
+        $this->mergeConfigFrom(__DIR__ . '/../config/user-crm.php', 'user-crm');
         $this->registerViews();
 
     }
@@ -47,6 +48,7 @@ class ActiveUserServiceProvider extends ServiceProvider
         $viewPath = resource_path('views/users/');
         $sourcePath = __DIR__ . '/../views/';
         $this->publishes([$sourcePath => $viewPath], ['views', 'Esatic']);
+        $this->publishes([__DIR__ . '/../config/user-crm.php' => config_path('user-crm.php')], 'user-crm');
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), 'Esatic');
     }
 

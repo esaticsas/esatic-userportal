@@ -2,14 +2,13 @@
 
 namespace Esatic\ActiveUser\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Esatic\ActiveUser\Models\User;
 use Esatic\ActiveUser\Service\CreateUser;
 use Esatic\ActiveUser\Service\UpdateUser;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class ContactController extends Controller
+class ContactController extends BaseController
 {
 
     private CreateUser $createUser;

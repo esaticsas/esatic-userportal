@@ -37,6 +37,6 @@ class NotifyNewAccount extends Mailable
         return $this->view('Esatic::mail')
             ->with('user', $this->user)
             ->with('password', $this->password)
-            ->subject(config('esatic.subject'));
+            ->subject(config('user-crm.subject'));
     }
 }

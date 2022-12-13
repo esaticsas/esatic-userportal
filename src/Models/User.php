@@ -2,6 +2,8 @@
 
 namespace Esatic\ActiveUser\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 /**
  * Class User
  *
@@ -13,6 +15,8 @@ namespace Esatic\ActiveUser\Models;
  * @property string $email
  * @property string $password
  * @property bool $active
+ * @property string $account_id
+ * @property string $principal_module_id
  */
 class User extends \App\Models\User
 {
@@ -25,6 +29,12 @@ class User extends \App\Models\User
         'password',
         'active',
         'principal_module',
-        'principal_module_id'
+        'principal_module_id',
+        'account_id'
     ];
+
+    public function user_modules(): HasMany
+    {
+        return $this->hasMany(UserModule::class, 'users_id', 'id');
+    }
 }
