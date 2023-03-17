@@ -35,10 +35,11 @@ class ContactController extends BaseController
         /** @var User $user */
         $user = User::query()->where('id_crm', '=', $request->input('id_crm'))->first();
         $result = array();
-        if (is_null($user))
+        if (is_null($user)) {
             $result = $this->createUser->execute();
-        else
+        } else {
             $result = $this->updateUser->execute($user);
+        }
         return response()->json($result);
     }
 

@@ -18,8 +18,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $account_id
  * @property string $principal_module_id
  */
-class User extends \App\Models\User
-{
+class User extends \App\Models\User {
+
     protected $fillable = [
         'name',
         'last_name',
@@ -30,11 +30,12 @@ class User extends \App\Models\User
         'active',
         'principal_module',
         'principal_module_id',
-        'account_id'
+        'account_id',
+        'account_name'
     ];
 
-    public function user_modules(): HasMany
-    {
+    public function user_modules(): HasMany {
         return $this->hasMany(UserModule::class, 'users_id', 'id');
     }
+
 }
